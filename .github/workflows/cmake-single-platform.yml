@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: jurplel/install-qt-action@v4
+    - name: Install dependencies
+      run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libsigc++-3.0-dev
+
+    - name: Build
+      working-directory: cpp/qt_app_simple_sound_ctl_demo
+      run: ./build.sh
